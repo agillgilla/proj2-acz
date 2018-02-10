@@ -21,8 +21,38 @@ int sign_extend_number( unsigned int field, unsigned int n) {
 /* Unpacks the 32-bit machine code instruction given into the correct
  * type within the instruction struct */ 
 Instruction parse_instruction(uint32_t instruction_bits) {
-    /* YOUR CODE HERE */
     Instruction instruction;
+
+    switch(instruction.opcode) {
+        case 0x33:
+            /* R-Type */
+            break;
+        case 0x13:
+            /* I-Type (not load) */
+            break;
+        case 0x3:
+            /* I-Type (load) */
+            break;
+        case 0x23:
+            /* S-Type */
+            break;
+        case 0x63:
+            /* B-Type */
+            break;
+        case 0x37:
+            /* U-Type (LUI) */
+            break;
+        case 0x6F:
+            /* UJ-Type */
+            break;
+        case 0x73:
+            /* I-Type (E-CALL) */
+            break;
+        default: // undefined opcode
+            fprintf(stderr, "%s %d", "Undefined opcode in instruction: ", instruction_bits);
+            break;
+    }
+    
     return instruction;
 }
 
