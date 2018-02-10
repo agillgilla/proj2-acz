@@ -17,9 +17,6 @@ int sign_extend_number( unsigned int field, unsigned int n) {
         result = result & mask; /* Apply the mask (fill in empty bits with most significant bit) */
     }
     
-    fprintf(stderr, "%s %d %s %d", "INPUT: field=", field, ", n=", n);
-    fprintf(stderr, "%s", "\n");
-    fprintf(stderr, "%s %d", "RESULT: ", result);
     return result;
 }
 
