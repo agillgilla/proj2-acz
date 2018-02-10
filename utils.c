@@ -5,8 +5,17 @@
 /* Sign extends the given field to a 32-bit integer where field is
  * interpreted an n-bit integer. */ 
 int sign_extend_number( unsigned int field, unsigned int n) {
-    /* YOUR CODE HERE */
-    return 0;
+    unsigned int most_significant_bit = (x >> (n - 1)) & 1;
+    int result = 0;
+    result = result + field;
+    int mask;
+    if (most_significant_bit) { /* Most significant bit is 1. */
+        mask = -1; /* All 1's */
+    } else { /* Most significant bit is 0. */
+        mask = 0 /* All 0's */
+    }
+    result = result | mask; /* Apply the mask (fill in empty bits with most significant bit) */
+    return result;
 }
 
 /* Unpacks the 32-bit machine code instruction given into the correct
