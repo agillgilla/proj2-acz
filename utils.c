@@ -22,8 +22,10 @@ int sign_extend_number( unsigned int field, unsigned int n) {
  * type within the instruction struct */ 
 Instruction parse_instruction(uint32_t instruction_bits) {
     Instruction instruction;
+    
+    unsigned opcode = value & ((1 << 7) - 1); /* Extract last 7 bits */
 
-    switch(instruction.opcode) {
+    switch(opcode) {
         case 0x33:
             /* R-Type */
             break;
@@ -87,5 +89,14 @@ void handle_invalid_read(Address address) {
 void handle_invalid_write(Address address) {
     printf("Bad Write. Address: 0x%08x\n", address);
     exit(-1);
+}
+
+
+unsigned get_bit_range(unsigned input, unsigned upper, unsigned lower) {
+    return (input >> lower) & ~(~0 << (upper - lower + 1));
+    /* Right shift off the unused lower (right) bits, then
+        mask off the unused upper bits by anding with all 
+        1s in the wanted bits and 0s in the unwanted left
+        bits. */ 
 }
 
