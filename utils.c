@@ -5,14 +5,14 @@
 /* Sign extends the given field to a 32-bit integer where field is
  * interpreted an n-bit integer. */ 
 int sign_extend_number( unsigned int field, unsigned int n) {
-    unsigned int most_significant_bit = (x >> (n - 1)) & 1;
+    unsigned int most_significant_bit = (field >> (n - 1)) & 1;
     int result = 0;
     result = result + field;
     int mask;
     if (most_significant_bit) { /* Most significant bit is 1. */
         mask = -1; /* All 1's */
     } else { /* Most significant bit is 0. */
-        mask = 0 /* All 0's */
+        mask = 0; /* All 0's */
     }
     result = result | mask; /* Apply the mask (fill in empty bits with most significant bit) */
     return result;
@@ -23,7 +23,7 @@ int sign_extend_number( unsigned int field, unsigned int n) {
 Instruction parse_instruction(uint32_t instruction_bits) {
     Instruction instruction;
     
-    unsigned opcode = value & ((1 << 7) - 1); /* Extract last 7 bits */
+    unsigned opcode = instruction_bits & ((1 << 7) - 1); /* Extract last 7 bits */
 
     switch(opcode) {
         case 0x33:
