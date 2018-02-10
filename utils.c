@@ -10,11 +10,13 @@ int sign_extend_number( unsigned int field, unsigned int n) {
     result = result + field;
     int mask;
     if (most_significant_bit) { /* Most significant bit is 1. */
-        mask = -1; /* All 1's */
+        mask = -1 - ((1 << n) - 1); /* All 1's in extra left spaces. */
+        result = result | mask; /* Apply the mask (fill in empty bits with most significant bit) */
     } else { /* Most significant bit is 0. */
-        mask = 0; /* All 0's */
+        mask = 0 + ((1 << n) - 1); /* All 0's in extra left spaces, 1's in used spaces. */
+        result = result & mask; /* Apply the mask (fill in empty bits with most significant bit) */
     }
-    result = result | mask; /* Apply the mask (fill in empty bits with most significant bit) */
+    
     fprintf(stderr, "%s %d %s %d", "INPUT: field=", field, ", n=", n);
     fprintf(stderr, "%s", "\n");
     fprintf(stderr, "%s %d", "RESULT: ", result);
