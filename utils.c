@@ -10,7 +10,7 @@ int sign_extend_number( unsigned int field, unsigned int n) {
     result = result + field;
     int mask;
     if (most_significant_bit) { /* Most significant bit is 1. */
-        frintf(stderr, "%s", "All ones!");
+        fprintf(stderr, "%s", "All ones!");
         mask = -1; /* All 1's */
     } else { /* Most significant bit is 0. */
         mask = 0; /* All 0's */
