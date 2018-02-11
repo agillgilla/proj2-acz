@@ -30,6 +30,8 @@ Instruction parse_instruction(uint32_t instruction_bits) {
     switch(opcode) {
         case 0x33:
             /* R-Type */
+            intstruction.rtype.opcode = get_bit_range(instruction_bits, 0, 6);
+            
             break;
         case 0x13:
             /* I-Type (not load) */
