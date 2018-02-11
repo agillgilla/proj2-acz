@@ -31,7 +31,7 @@ Instruction parse_instruction(uint32_t instruction_bits) {
         case 0x33:
             /* R-Type */
             instruction.rtype.opcode = get_bit_range(instruction_bits, 0, 6);
-
+            fprintf(stderr, "%s %d %s %d", "BITS: ", instruction_bits, "OPCODE: ", get_bit_range(instruction_bits, 0, 6));
             break;
         case 0x13:
             /* I-Type (not load) */
