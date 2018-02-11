@@ -96,7 +96,7 @@ void handle_invalid_write(Address address) {
 }
 
 
-unsigned get_bit_range(unsigned input, unsigned upper, unsigned lower) {
+unsigned get_bit_range(unsigned input, unsigned lower, unsigned upper) {
     return (input >> lower) & ~(~0 << (upper - lower + 1));
     /* Right shift off the unused lower (right) bits, then
         mask off the unused upper bits by anding with all 
