@@ -31,28 +31,53 @@ Instruction parse_instruction(uint32_t instruction_bits) {
         case 0x33:
             /* R-Type */
             instruction.rtype.opcode = get_bit_range(instruction_bits, 0, 6);
-            fprintf(stderr, "%s %d %s %d", "BITS: ", instruction_bits, "OPCODE: ", get_bit_range(instruction_bits, 0, 6));
+            instruction.rtype.rd = get_bit_range(instruction_bits, 7, 11);
+            instruction.rtype.funct3 = get_bit_range(instruction_bits, 12, 14);
+            instruction.rtype.rs1 = get_bit_range(instruction_bits, 15, 19);
+            instruction.rtype.rs2 = get_bit_range(instruction_bits, 20, 24);
+            instruction.rtype.funct7 = get_bit_range(instruction_bits, 25, 31);
+
             break;
-        case 0x13:
-            /* I-Type (not load) */
-            break;
-        case 0x3:
-            /* I-Type (load) */
+        case 0x13: case 0x3: case 0x73:
+            /* I-Type */
+            instruction.itype.opcode = get_bit_range(instruction_bits, 0, 6);
+            instruction.itype.rd = get_bit_range(instruction_bits, 7, 11);
+            instruction.itype.funct3 = get_bit_range(instruction_bits, 12, 14);
+            instruction.itype.rs1 = get_bit_range(instruction_bits, 15, 19);
+            instruction.itype.imm = get_bit_range(instruction_bits, 20, 31);
             break;
         case 0x23:
             /* S-Type */
+            instruction.stype.opcode = get_bit_range(instruction_bits, 0, 6);
+            instruction.stype.imm5 = get_bit_range(instruction_bits, 7, 11);
+            instruction.stype.funct3 = get_bit_range(instruction_bits, 12, 14);
+            instruction.stype.rs1 = get_bit_range(instruction_bits, 15, 19);
+            instruction.stype.rs2 = get_bit_range(instruction_bits, 20, 24);
+            instruction.stype.imm7 = get_bit_range(instruction_bits, 25, 31);
             break;
         case 0x63:
-            /* B-Type */
+            /* SB-Type */
+            instruction.sbtype.opcode = get_bit_range(instruction_bits, 0, 6);
+            /* FIX */
+            instruction.sbtype.imm5 = get_bit_range(instruction_bits, 7, 11);
+            instruction.sbtype.funct3 = get_bit_range(instruction_bits, 12, 14);
+            instruction.sbtype.rs1 = get_bit_range(instruction_bits, 15, 19);
+            instruction.sbtype.rs2 = get_bit_range(instruction_bits, 20, 24);
+            /* FIX */
+            instruction.sbtype.imm7 = get_bit_range(instruction_bits, 25, 31);
             break;
         case 0x37:
             /* U-Type (LUI) */
+            instruction.utype.opcode = get_bit_range(instruction_bits, 0, 6);
+            instruction.utype.rd = get_bit_range(instruction_bits, 7, 11);
+            instruction.utype.imm = get_bit_range(instruction_bits, 12, 31);
             break;
         case 0x6F:
             /* UJ-Type */
-            break;
-        case 0x73:
-            /* I-Type (E-CALL) */
+            instruction.ujtype.opcode = get_bit_range(instruction_bits, 0, 6);
+            instruction.ujtype.rd = get_bit_range(instruction_bits, 7, 11);
+            /* FIX */
+            instruction.ujtype.imm = get_bit_range(instruction_bits, 12, 31);
             break;
         default: // undefined opcode
             fprintf(stderr, "%s %d", "Undefined opcode in instruction: ", instruction_bits);
