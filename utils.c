@@ -188,7 +188,7 @@ unsigned set_bit(unsigned input, unsigned pos, unsigned val) {
 unsigned set_bit_range(unsigned src, unsigned dst, int num_bits, int src_pos, int dst_pos) {
     unsigned mask = ((1<<(num_bits))-1)<<(src_pos);
 
-    if (dst_pos >= src_pos) {
+    if (dst_pos > src_pos) {
             return (dst & (~(mask << dst_pos))) | ((src & mask) << dst_pos);
     } else {
         return (dst & (~(mask >> (src_pos - dst_pos)))) | ((src & mask) >> (src_pos - dst_pos));
