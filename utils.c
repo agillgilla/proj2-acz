@@ -115,7 +115,7 @@ int get_branch_offset(Instruction instruction) {
     print_unsigned_binary(imm_actual_int);
     fprintf(stderr, "%s", "\n");
 
-    imm_actual_int = imm_actual_int << 1;
+    //imm_actual_int = imm_actual_int << 1;
 
     fprintf(stderr, "%s", "AFTER MULTIPLY: ");
     print_unsigned_binary(imm_actual_int);
@@ -137,7 +137,7 @@ int get_jump_offset(Instruction instruction) {
 
     int imm_actual_int = sign_extend_number(imm_actual, 20);
 
-    imm_actual_int = imm_actual_int << 1;
+    //imm_actual_int = imm_actual_int << 1;
 
     return imm_actual_int;
 }
@@ -152,7 +152,7 @@ int get_store_offset(Instruction instruction) {
 
     int imm_actual_int = sign_extend_number(imm_actual, 12);
 
-    imm_actual_int = imm_actual_int << 1;
+    //imm_actual_int = imm_actual_int << 1;
 
     return imm_actual_int;
 }
