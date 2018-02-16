@@ -99,7 +99,7 @@ int get_branch_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm5, imm_actual, 4, 1, 1);
     imm_actual = set_bit_range(imm5, imm_actual, 1, 0, 11);
     
-    int imm_actual_int = sign_extend_number(imm_actual, 13); 
+    int imm_actual_int = sign_extend_number(imm_actual, 12); 
 
     imm_actual_int = imm_actual_int * 2;
 
@@ -117,7 +117,7 @@ int get_jump_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm, imm_actual, 1, 8, 11);
     imm_actual = set_bit_range(imm, imm_actual, 8, 0, 12);
 
-    int imm_actual_int = sign_extend_number(imm_actual, 21);
+    int imm_actual_int = sign_extend_number(imm_actual, 20);
 
     imm_actual_int = imm_actual_int * 2;
 
@@ -132,7 +132,7 @@ int get_store_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm7, imm_actual, 7, 0, 5);
     imm_actual = set_bit_range(imm5, imm_actual, 5, 0, 0);
 
-    int imm_actual_int = sign_extend_number(imm_actual, 13);
+    int imm_actual_int = sign_extend_number(imm_actual, 12);
 
     imm_actual_int = imm_actual_int * 2;
 
