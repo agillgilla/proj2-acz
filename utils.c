@@ -4,7 +4,7 @@
 
 /* Sign extends the given field to a 32-bit integer where field is
  * interpreted an n-bit integer. */ 
-int sign_extend_number( unsigned int field, unsigned int n) {
+int sign_extend_number(unsigned int field, unsigned int n) {
     unsigned int most_significant_bit = (field >> (n - 1)) & 1;
     int result = 0;
     result = result + field;
@@ -90,8 +90,18 @@ Instruction parse_instruction(uint32_t instruction_bits) {
 /* Return the number of bytes (from the current PC) to the branch label using the given
  * branch instruction */
 int get_branch_offset(Instruction instruction) {
-    /* YOUR CODE HERE */
-    return 0; 
+    unsigned imm5 = instruction.sbtype.imm5;
+    unsigned imm7 = insturction.sbtype.imm7;
+
+    unsigned imm_actual = 0;
+    imm_actual = set_bit_range(imm7, imm_actual, 1, 6, 12);
+    imm_actual = set_bit_range(imm7, imm_actual, 6, 0, 5);
+    imm_actual = set_bit_range(imm5, imm_actual, 4, 1, 1);
+    imm_actual = set_bit_range(imm5, imm_actual, 1, 0, 11);
+    
+    imm_actual = imm_actual / 2;
+
+    return imm_actual; 
 }
 
 /* Returns the number of bytes (from the current PC) to the jump label using the given
@@ -128,4 +138,19 @@ unsigned get_bit_range(unsigned input, unsigned lower, unsigned upper) {
         1s in the wanted bits and 0s in the unwanted left
         bits. */ 
 }
+
+unsigned set_bit(unsigned input, unsigned pos, unsigned val) {
+    input ^= (-val ^ input) & (1 << pos);
+    return input;
+}
+
+unsigned set_bit_range(unsigned src, unsigned dst, int num_bits, int src_pos, int dst_pos) {
+    unsigned mask = ((1<<(num_bits))-1)<<(src_pos);
+
+    if (dst_pos >= src_pos) {
+            return (dst & (~(mask << dst_pos))) | ((src & mask) << dst_pos);
+    } else {
+        return (dst & (~(mask >> (src_pos - dst_pos)))) | ((src & mask) >> (src_pos - dst_pos));
+    }
+}                             
 
