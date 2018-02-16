@@ -111,6 +111,10 @@ int get_branch_offset(Instruction instruction) {
 
     imm_actual_int = imm_actual_int * 2;
 
+    fprintf(stderr, "%s", "AFTER MULTIPLY: ");
+    print_unsigned_binary(imm_actual_int);
+    fprintf(stderr, "%s", "\n");
+
     return imm_actual_int; 
 }
 
