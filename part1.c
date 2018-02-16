@@ -227,15 +227,15 @@ void print_lui(Instruction instruction) {
 }
 
 void print_jal(Instruction instruction) {
-    fprintf(stdout, JAL_FORMAT, instruction.ujtype.rd, get_jump_offset(intruction));
+    fprintf(stdout, JAL_FORMAT, instruction.ujtype.rd, get_jump_offset(instruction));
 }
 
 void print_ecall(Instruction instruction) {
-    fpritf(stdout, ECALL_FORMAT);
+    fprintf(stdout, ECALL_FORMAT);
 }
 
 void print_rtype(char *name, Instruction instruction) {
-    fprintf(stdout, RTYPE_FORMAT, name, intruction.rtype.rd, instruction.rtype.rs1, instruction.rtype.rs2);
+    fprintf(stdout, RTYPE_FORMAT, name, instruction.rtype.rd, instruction.rtype.rs1, instruction.rtype.rs2);
 }
 
 void print_itype_except_load(char *name, Instruction instruction, int imm) {
