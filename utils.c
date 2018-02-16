@@ -91,7 +91,7 @@ Instruction parse_instruction(uint32_t instruction_bits) {
  * branch instruction */
 int get_branch_offset(Instruction instruction) {
     unsigned imm5 = instruction.sbtype.imm5;
-    unsigned imm7 = insturction.sbtype.imm7;
+    unsigned imm7 = instruction.sbtype.imm7;
 
     unsigned imm_actual = 0;
     imm_actual = set_bit_range(imm7, imm_actual, 1, 6, 12);
