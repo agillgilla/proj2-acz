@@ -99,21 +99,44 @@ int get_branch_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm5, imm_actual, 4, 1, 1);
     imm_actual = set_bit_range(imm5, imm_actual, 1, 0, 11);
     
-    imm_actual = imm_actual / 2;
+    int imm_actual_int = sign_extend_number(imm_actual, 13); 
 
-    return imm_actual; 
+    imm_actual_int = imm_actual_int * 2;
+
+    return imm_actual_int; 
 }
 
 /* Returns the number of bytes (from the current PC) to the jump label using the given
  * jump instruction */
 int get_jump_offset(Instruction instruction) {
-    /* YOUR CODE HERE */
-    return 0;
+    unsigned imm = instruction.ujtype.imm;
+
+    unsigned imm_actual = 0;
+    imm_actual = set_bit_range(imm, imm_actual, 1, 19, 20);
+    imm_actual = set_bit_range(imm, imm_actual, 10, 9, 1);
+    imm_actual = set_bit_range(imm, imm_actual, 1, 8, 11);
+    imm_actual = set_bit_range(imm, imm_actual, 8, 0, 12);
+
+    int imm_actual_int = sign_extend_number(imm_actual, 21);
+
+    imm_actual_int = imm_actual_int * 2;
+
+    return imm_actual_int;
 }
 
 int get_store_offset(Instruction instruction) {
-    /* YOUR CODE HERE */
-    return 0;
+    unsigned imm5 = instruction.stype.imm5;
+    unsigned imm7 = instruction.stype.imm7;
+
+    unsigned imm_actual = 0;
+    imm_actual = set_bit_range(imm7, imm_actual, 7, 0, 5);
+    imm_actual = set_bit_range(imm5, imm_actual, 5, 0, 0);
+
+    int imm_actual_int = sign_extend_number(imm_actual, 13);
+
+    imm_actual_int = imm_actual_int * 2;
+
+    return imm_actual_int;
 }
 
 void handle_invalid_instruction(Instruction instruction) {
