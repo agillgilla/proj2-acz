@@ -98,6 +98,12 @@ int get_branch_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm7, imm_actual, 6, 0, 5);
     imm_actual = set_bit_range(imm5, imm_actual, 4, 1, 1);
     imm_actual = set_bit_range(imm5, imm_actual, 1, 0, 11);
+
+    fprintf(stderr, "%s", "IMM7: ");
+    print_unsigned_binary(imm7);
+    fprintf(stderr, "%s", ", IMM5: ");
+    print_unsigned_binary(imm5);
+    fprintf(stderr, "%s", "\n");
     
     fprintf(stderr, "%s", "BEFORE: ");
     print_unsigned_binary(imm_actual);
