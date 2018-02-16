@@ -19,3 +19,4 @@ void handle_invalid_write(Address);
 
 unsigned get_bit_range(unsigned, unsigned, unsigned);
 unsigned set_bit_range(unsigned, unsigned, int, int, int);
+void print_unsigned_binary(unsigned);
