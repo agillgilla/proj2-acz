@@ -99,7 +99,7 @@ int get_branch_offset(Instruction instruction) {
     imm_actual = set_bit_range(imm5, imm_actual, 4, 1, 1);
     imm_actual = set_bit_range(imm5, imm_actual, 1, 0, 11);
 
-    fprintf(stderr, "%s", "IMM7: ");
+    /*fprintf(stderr, "%s", "IMM7: ");
     print_unsigned_binary(imm7);
     fprintf(stderr, "%s", ", IMM5: ");
     print_unsigned_binary(imm5);
@@ -107,19 +107,19 @@ int get_branch_offset(Instruction instruction) {
     
     fprintf(stderr, "%s", "BEFORE: ");
     print_unsigned_binary(imm_actual);
-    fprintf(stderr, "%s", "\n");
+    fprintf(stderr, "%s", "\n");*/
 
     int imm_actual_int = sign_extend_number(imm_actual, 12);
 
-    fprintf(stderr, "%s", "AFTER: ");
+    /*fprintf(stderr, "%s", "AFTER: ");
     print_unsigned_binary(imm_actual_int);
-    fprintf(stderr, "%s", "\n");
+    fprintf(stderr, "%s", "\n");*/
 
     //imm_actual_int = imm_actual_int << 1;
 
-    fprintf(stderr, "%s", "AFTER MULTIPLY: ");
+    /*fprintf(stderr, "%s", "AFTER MULTIPLY: ");
     print_unsigned_binary(imm_actual_int);
-    fprintf(stderr, "%s", "\n");
+    fprintf(stderr, "%s", "\n");*/
 
     return imm_actual_int; 
 }
