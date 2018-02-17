@@ -251,7 +251,7 @@ void print_rtype(char *name, Instruction instruction) {
 }
 
 void print_itype_except_load(char *name, Instruction instruction, int imm) {
-    unsigned imm_raw = instruction.itype.imm;
+    unsigned imm_raw = (unsigned) imm;
     int imm_ext = sign_extend_number(imm_raw, 12);
     fprintf(stderr, "%s", "\nMY OUTPUT: ");
     fprintf(stderr, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm_ext);
