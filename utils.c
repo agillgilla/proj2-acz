@@ -147,7 +147,7 @@ int get_jump_offset(Instruction instruction) {
     print_unsigned_binary(imm_actual);
     fprintf(stderr, "%s", "\n");
     imm_actual = set_bit_range(imm, imm_actual, 8, 0, 12);
-    fprintf(stderr, "%s", "END: ");
+    fprintf(stderr, "%s", "4.) ");
     print_unsigned_binary(imm_actual);
     fprintf(stderr, "%s", "\n");
 
