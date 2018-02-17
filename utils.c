@@ -129,6 +129,10 @@ int get_branch_offset(Instruction instruction) {
 int get_jump_offset(Instruction instruction) {
     unsigned imm = instruction.ujtype.imm;
 
+    fprintf(stderr, "%s", "BEFORE: ");
+    print_unsigned_binary(imm);
+    fprintf(stderr, "%s", "\n");
+
     unsigned imm_actual = 0;
     imm_actual = set_bit_range(imm, imm_actual, 1, 19, 20);
     imm_actual = set_bit_range(imm, imm_actual, 10, 9, 1);
