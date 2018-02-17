@@ -251,10 +251,12 @@ void print_rtype(char *name, Instruction instruction) {
 }
 
 void print_itype_except_load(char *name, Instruction instruction, int imm) {
+    unsigned imm_raw = instruction.itype.imm;
+    int imm_ext = sign_extend_number(imm_raw, 12);
     fprintf(stderr, "%s", "\nMY OUTPUT: ");
-    fprintf(stderr, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm);
+    fprintf(stderr, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm_ext);
     fprintf(stderr, "%s", "\n");
-    fprintf(stdout, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm);
+    fprintf(stdout, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm_ext);
 }
 
 void print_load(char *name, Instruction instruction) {
@@ -266,9 +268,9 @@ void print_load(char *name, Instruction instruction) {
 
 void print_store(char *name, Instruction instruction) {
     fprintf(stderr, "%s", "\nMY OUTPUT: ");
-    fprintf(stderr, MEM_FORMAT, name, instruction.stype.rs1, get_store_offset(instruction), instruction.stype.rs2);
+    fprintf(stderr, MEM_FORMAT, name, instruction.stype.rs2, get_store_offset(instruction), instruction.stype.rs1);
     fprintf(stderr, "%s", "\n");
-    fprintf(stdout, MEM_FORMAT, name, instruction.stype.rs1, get_store_offset(instruction), instruction.stype.rs2);
+    fprintf(stdout, MEM_FORMAT, name, instruction.stype.rs2, get_store_offset(instruction), instruction.stype.rs1);
 }
 
 void print_branch(char *name, Instruction instruction) {
