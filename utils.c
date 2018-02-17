@@ -200,7 +200,7 @@ unsigned set_bit_range(unsigned src, unsigned dst, int num_bits, int src_pos, in
 }       
 
 void print_unsigned_binary(unsigned n) {
-    unsigned i = 0x8000;
+    unsigned i = 0x80000;
     while (i != 0) {
         if (n & i) {
             fprintf(stderr, "%s", "1");
