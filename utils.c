@@ -201,6 +201,7 @@ unsigned set_bit(unsigned input, unsigned pos, unsigned val) {
     return input;
 }
 
+/*
 unsigned set_bit_range(unsigned src, unsigned dst, int num_bits, int src_pos, int dst_pos) {
     unsigned mask = ((1<<(num_bits))-1)<<(src_pos);
 
@@ -209,7 +210,17 @@ unsigned set_bit_range(unsigned src, unsigned dst, int num_bits, int src_pos, in
     } else {
         return (dst & (~(mask >> (src_pos - dst_pos)))) | ((src & mask) >> (src_pos - dst_pos));
     }
-}       
+}  
+*/  
+
+unsigned set_bit_range(int src, int dst, int num_bits, int src_pos, int dst_pos) {
+    int mask = ((1 << num_bits) - 1) << src_pos;
+    if (dst_pos > src_pos) {
+        return ((src & mask) << (dst_pos - src_pos)) | (dst & ~(mask << (dst_pos - src_pos)));
+    } else {
+        return ((src & mask) >> (src_pos - dst_pos)) | (dst & ~(mask >> (src_pos - dst_pos)));
+    }
+}   
 
 void print_unsigned_binary(unsigned n) {
     unsigned i = 0x80000;
