@@ -16,5 +16,3 @@ int get_store_offset(Instruction);
 void handle_invalid_instruction(Instruction);
 void handle_invalid_read(Address);
 void handle_invalid_write(Address);
-
-
