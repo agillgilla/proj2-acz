@@ -63,7 +63,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                     break;
                 case 0x20:
                     // Sub
-                    processor->[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] - processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] - processor->R[instruction.rtype.rs2];
                     processor->PC += 4;
                     break;
                 default:
@@ -94,7 +94,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             break;
         case 0x2:
             // SLT
-            processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] < procesor->R[instruction.rtype.rs2];
+            processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] < processor->R[instruction.rtype.rs2];
             processor->PC += 4;
             break;
         case 0x4:
