@@ -250,6 +250,14 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
 }
 
 Word load(Byte *memory, Address address, Alignment alignment) {
-    /* YOUR CODE HERE */
-    return 0;
+    if (alignment == LENGTH_WORD) {}
+        return *(uint32_t*)(memory + address);
+    } else if (alignment == LENGTH_HALF_WORD) {
+        return *(uint16_t*)(memory + address);
+    } else if (alignment == LENGTH_BYTE) {}
+        return *(uint8_t*)(memory + address);
+    }
+    
+    fprintf(stderr, "%s", "ERROR: Unknown alignment type in load(...)");
+    exit(-1);
 }
