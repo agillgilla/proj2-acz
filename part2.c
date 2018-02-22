@@ -53,12 +53,18 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             switch (instruction.rtype.funct7) {
                 case 0x0:
                     // Add
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] + processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x1:
                     // Mul 
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] * processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x20:
                     // Sub
+                    processor->[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] - processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 default:
                     handle_invalid_instruction(instruction);
@@ -70,22 +76,38 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             switch (instruction.rtype.funct7) {
                 case 0x0:
                     // SLL
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] << processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x1:
                     // MULH
+                    /*IMPLEMENT THIS LATER! */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
+                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
                     break;
             }
             break;
         case 0x2:
             // SLT
+            processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] < procesor->R[instruction.rtype.rs2];
+            processor->PC += 4;
             break;
         case 0x4:
             switch (instruction.rtype.funct7) {
                 case 0x0:
                     // XOR
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] ^ processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x1:
                     // DIV
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] / processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 default:
                     handle_invalid_instruction(instruction);
@@ -96,10 +118,14 @@ void execute_rtype(Instruction instruction, Processor *processor) {
         case 0x5:
             switch (instruction.rtype.funct7) {
                 case 0x0:
-                // SRL      
+                    // SRL
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] >> processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x20:
                     // SRA
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] >> processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 default:
                     handle_invalid_instruction(instruction);
@@ -111,9 +137,13 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             switch (instruction.rtype.funct7) {
                 case 0x0:
                     // OR
+                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] | processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 case 0x1:
                     // REM
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] % (int32_t) processor->R[instruction.rtype.rs2];
+                    processor->PC += 4;
                     break;
                 default:
                     handle_invalid_instruction(instruction);
@@ -123,6 +153,8 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             break;
         case 0x7:
             // AND
+            processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] & processor->R[instruction.rtype.rs2];
+            processor->PC += 4;
             break;
         default:
             handle_invalid_instruction(instruction);
