@@ -250,11 +250,11 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
 }
 
 Word load(Byte *memory, Address address, Alignment alignment) {
-    if (alignment == LENGTH_WORD) {}
+    if (alignment == LENGTH_WORD) {
         return *(uint32_t*)(memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
         return *(uint16_t*)(memory + address);
-    } else if (alignment == LENGTH_BYTE) {}
+    } else if (alignment == LENGTH_BYTE) {
         return *(uint8_t*)(memory + address);
     }
     
