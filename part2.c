@@ -134,7 +134,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                 default:
                     handle_invalid_instruction(instruction);
                     exit(-1);
-                break;
+                    break;
             }
             break;
         case 0x6:
