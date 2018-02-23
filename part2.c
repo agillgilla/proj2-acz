@@ -335,9 +335,10 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
         *(uint16_t*) (memory + address) = (uint16_t) value;
     } else if (alignment == LENGTH_BYTE) {
         *(uint8_t*) (memory + address) = (uint8_t) value;
+    } else {
+        fprintf(stderr, "%s", "ERROR: Unknown alignment type in store(...)");
+        exit(-1);
     }
-    fprintf(stderr, "%s", "ERROR: Unknown alignment type in store(...)");
-    exit(-1);
 }
 
 Word load(Byte *memory, Address address, Alignment alignment) {
