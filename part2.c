@@ -189,7 +189,7 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] ^ imm;
             processor->PC += 4;
             break;
-        case 0x5:
+        case 0x5: ; //This is an empty statement
             // Shift Right (You must handle both logical and arithmetic)
             unsigned shamt = get_bit_range(instruction.itype.imm, 0, 4);
             unsigned funct = get_bit_range(instruction.itype.imm, 10, 10);
@@ -274,17 +274,17 @@ void execute_load(Instruction instruction, Processor *processor, Byte *memory) {
     switch (instruction.itype.funct3) {
         case 0x0:
             // LB
-            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_BYTE));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm, 12), LENGTH_BYTE));
             processor->PC += 4;
             break;
         case 0x1:
             // LH
-            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_HALF_WORD));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm, 12), LENGTH_HALF_WORD));
             processor->PC += 4;
             break;
         case 0x2:
             // LW
-            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_WORD));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm, 12), LENGTH_WORD));
             processor->PC += 4;
             break;
         default:
