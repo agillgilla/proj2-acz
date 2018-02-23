@@ -328,6 +328,7 @@ void execute_lui(Instruction instruction, Processor *processor) {
 }
 
 void store(Byte *memory, Address address, Alignment alignment, Word value) {
+    fprintf(stderr, "%s", "CALLED STORE");
     if (alignment == LENGTH_WORD) {
         *(uint32_t*) (memory + address) = (uint32_t) value;
     } else if (alignment == LENGTH_HALF_WORD) {
@@ -335,9 +336,12 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
     } else if (alignment == LENGTH_BYTE) {
         *(uint8_t*) (memory + address) = (uint8_t) value;
     }
+    fprintf(stderr, "%s", "ERROR: Unknown alignment type in store(...)");
+    exit(-1);
 }
 
 Word load(Byte *memory, Address address, Alignment alignment) {
+    fprintf(stderr, "%s", "CALLED LOAD");
     if (alignment == LENGTH_WORD) {
         return *(uint32_t*) (memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
