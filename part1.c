@@ -19,7 +19,6 @@ void write_branch(Instruction);
 
 
 void decode_instruction(uint32_t instruction_bits) {
-    fprintf(stderr, "%s", "CALLED");
     Instruction instruction = parse_instruction(instruction_bits);
     switch(instruction.opcode) {
         case 0x33:
