@@ -326,7 +326,7 @@ void execute_jal(Instruction instruction, Processor *processor) {
 }
 
 void execute_lui(Instruction instruction, Processor *processor) {
-    processor->R[instruction.utype.rd] = instruction.utype.imm << 12;
+    processor->R[instruction.utype.rd] = sign_extend_number(instruction.utype.imm, 20) << 12;
     processor->PC += 4;
 }
 
