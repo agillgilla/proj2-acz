@@ -350,10 +350,4 @@ Word load(Byte *memory, Address address, Alignment alignment) {
     exit(-1);
 }
 
-unsigned get_bit_range(unsigned input, unsigned lower, unsigned upper) {
-    return (input >> lower) & ~(~0 << (upper - lower + 1));
-    /* Right shift off the unused lower (right) bits, then
-        mask off the unused upper bits by anding with all 
-        1s in the wanted bits and 0s in the unwanted left
-        bits. */ 
-}
+
