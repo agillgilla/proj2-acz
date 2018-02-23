@@ -83,6 +83,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                     break;
                 case 0x1:
                     // MULH
+                    fprintf(stderr, "%s", "CALLED mulH\n");
                     /*IMPLEMENT THIS LATER! */
                 /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
                 /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
