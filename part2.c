@@ -342,12 +342,15 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
 }
 
 Word load(Byte *memory, Address address, Alignment alignment) {
-    fprintf(stderr, "%s", "CALLED LOAD");
+    
     if (alignment == LENGTH_WORD) {
+        fprintf(stderr, "%s", "LOADING WORD\n");
         return *(uint32_t*) (memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
+        fprintf(stderr, "%s", "LOADING HALF WORD\n");
         return *(uint16_t*) (memory + address);
     } else if (alignment == LENGTH_BYTE) {
+        fprintf(stderr, "%s", "LOADING BYTE\n");
         return *(uint8_t*) (memory + address);
     }
     
