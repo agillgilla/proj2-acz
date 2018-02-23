@@ -13,6 +13,8 @@ void execute_store(Instruction, Processor *, Byte *);
 void execute_ecall(Processor *, Byte *);
 void execute_lui(Instruction, Processor *);
 
+unsigned get_bit_range(unsigned, unsigned, unsigned);
+
 void execute_instruction(uint32_t instruction_bits, Processor *processor,Byte *memory) {    
     Instruction instruction = parse_instruction(instruction_bits);
     switch(instruction.opcode) {
@@ -240,14 +242,14 @@ void execute_ecall(Processor *p, Byte *memory) {
             exit(-1);
             break;
     }
-    processor->PC += 4;
+    p->PC += 4;
 }
 
 void execute_branch(Instruction instruction, Processor *processor) {
     switch (instruction.sbtype.funct3) {
         case 0x0:
             // BEQ
-        if (processor->R[instruction.itype.rs1] == processor->R[instruction.itype.rs2]) {
+        if (processor->R[instruction.sbtype.rs1] == processor->R[instruction.sbtype.rs2]) {
             processor->PC += get_branch_offset(instruction);
         } else {
             processor->PC += 4;
@@ -255,7 +257,7 @@ void execute_branch(Instruction instruction, Processor *processor) {
             break;
         case 0x1:
             // BNE
-        if (processor->R[instruction.itype.rs1] != processor->R[instruction.itype.rs2]) {
+        if (processor->R[instruction.sbtype.rs1] != processor->R[instruction.sbtype.rs2]) {
             processor->PC += get_branch_offset(instruction);
         } else {
             processor->PC += 4;
@@ -272,17 +274,17 @@ void execute_load(Instruction instruction, Processor *processor, Byte *memory) {
     switch (instruction.itype.funct3) {
         case 0x0:
             // LB
-            processor->R[instruction.itype.rd] = sign_extend_number(load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_BYTE));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_BYTE));
             processor->PC += 4;
             break;
         case 0x1:
             // LH
-            processor->R[instruction.itype.rd] = sign_extend_number(load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_HALF_WORD));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_HALF_WORD));
             processor->PC += 4;
             break;
         case 0x2:
             // LW
-            processor->R[instruction.itype.rd] = sign_extend_number(load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_WORD));
+            processor->R[instruction.itype.rd] = (unsigned) (load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm), LENGTH_WORD));
             processor->PC += 4;
             break;
         default:
@@ -346,4 +348,12 @@ Word load(Byte *memory, Address address, Alignment alignment) {
     
     fprintf(stderr, "%s", "ERROR: Unknown alignment type in load(...)");
     exit(-1);
+}
+
+unsigned get_bit_range(unsigned input, unsigned lower, unsigned upper) {
+    return (input >> lower) & ~(~0 << (upper - lower + 1));
+    /* Right shift off the unused lower (right) bits, then
+        mask off the unused upper bits by anding with all 
+        1s in the wanted bits and 0s in the unwanted left
+        bits. */ 
 }
