@@ -203,12 +203,12 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             break;
         case 0x6:
             // ORI
-            processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] | imm;
+            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1], 5) | imm;
             processor->PC += 4;
             break;
         case 0x7:
             // ANDI
-            processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] & imm;
+            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1], 5) & imm;
             processor->PC += 4;
             break;
         default:
