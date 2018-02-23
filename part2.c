@@ -347,6 +347,7 @@ Word load(Byte *memory, Address address, Alignment alignment) {
     if (alignment == LENGTH_WORD) {
         fprintf(stderr, "%s", "LOADING WORD\n");
         fprintf(stderr, "%d%s", *(uint32_t*) (memory + address), "\n");
+        decode_instruction(*(uint32_t*) (memory + address));
         return *(uint32_t*) (memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
         fprintf(stderr, "%s", "LOADING HALF WORD\n");
