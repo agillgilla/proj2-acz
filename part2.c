@@ -368,18 +368,18 @@ void store(Byte *memory, Address address, Alignment alignment, Word value) {
 Word load(Byte *memory, Address address, Alignment alignment) {
     
     if (alignment == LENGTH_WORD) {
-        fprintf(stderr, "%s", "LOADING WORD\n");
-        fprintf(stderr, "%d%s", *(uint32_t*) (memory + address), "\n");
+        //fprintf(stderr, "%s", "LOADING WORD\n");
+        //fprintf(stderr, "%d%s", *(uint32_t*) (memory + address), "\n");
         //print_debug_instruction(*(uint32_t*) (memory + address));
         //decode_instruction(*(uint32_t*) (memory + address));
         return *(uint32_t*) (memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
-        fprintf(stderr, "%s", "LOADING HALF WORD\n");
-        fprintf(stderr, "%d%s", *(uint16_t*) (memory + address), "\n");
+        //fprintf(stderr, "%s", "LOADING HALF WORD\n");
+        //fprintf(stderr, "%d%s", *(uint16_t*) (memory + address), "\n");
         return *(uint16_t*) (memory + address);
     } else if (alignment == LENGTH_BYTE) {
-        fprintf(stderr, "%s", "LOADING BYTE\n");
-        fprintf(stderr, "%d%s", *(uint8_t*) (memory + address), "\n");
+        //fprintf(stderr, "%s", "LOADING BYTE\n");
+        //fprintf(stderr, "%d%s", *(uint8_t*) (memory + address), "\n");
         return *(uint8_t*) (memory + address);
     }
     
