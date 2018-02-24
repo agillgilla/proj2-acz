@@ -191,6 +191,10 @@ void handle_invalid_write(Address address) {
     exit(-1);
 }
 
+void debug_handle_invalid_instruction(Instruction instruction) {
+    printf("DEBUGGING PRING: Invalid Instruction: 0x%08x\n", instruction.bits); 
+}
+
 
 unsigned get_bit_range(unsigned input, unsigned lower, unsigned upper) {
     return (input >> lower) & ~(~0 << (upper - lower + 1));

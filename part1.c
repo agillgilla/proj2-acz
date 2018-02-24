@@ -287,3 +287,265 @@ void print_branch(char *name, Instruction instruction) {
     fprintf(stdout, BRANCH_FORMAT, name, instruction.sbtype.rs1, instruction.sbtype.rs2, get_branch_offset(instruction));
     fprintf(stderr, BRANCH_FORMAT, name, instruction.sbtype.rs1, instruction.sbtype.rs2, get_branch_offset(instruction));
 }
+
+void print_debug_instruction(uint32_t instruction_bits) {
+    Instruction instruction = parse_instruction(instruction_bits);
+    switch(instruction.opcode) {
+        case 0x33:
+            debug_write_rtype(instruction);
+            break;
+        case 0x13:
+            debug_write_itype_except_load(instruction);
+            break;
+        case 0x3:
+            debug_write_load(instruction);
+            break;
+        case 0x23:
+            debug_write_store(instruction);
+            break;
+        case 0x63:
+            debug_write_branch(instruction);
+            break;
+        case 0x37:
+            debug_print_lui(instruction);
+            break;
+        case 0x6F:
+            debug_debug_print_jal(instruction);
+            break;
+        case 0x73:
+            debug_print_ecall(instruction);
+            break;
+        default: // undefined opcode
+            debug_handle_invalid_instruction(instruction);
+            break;
+    }
+}
+
+void debug_write_rtype(Instruction instruction) {
+    switch (instruction.rtype.funct3) {
+        case 0x0:
+            switch (instruction.rtype.funct7) {
+                case 0x0:
+                    debug_print_rtype("add", instruction);
+                    break;
+                case 0x1:
+                    debug_print_rtype("mul", instruction);
+                    break;
+                case 0x20:
+                    debug_print_rtype("sub", instruction);
+                    break;
+                default:
+                    debug_handle_invalid_instruction(instruction);
+                break;      
+            }
+            break;
+        case 0x1:
+            switch (instruction.rtype.funct7) {
+                case 0x0:
+                debug_print_rtype("sll", instruction);
+                break;
+                case 0x1:
+                debug_print_rtype("mulh", instruction);
+                break;
+                default:
+                debug_handle_invalid_instruction(instruction);
+                break;
+            }
+            break;
+        case 0x2:
+            debug_print_rtype("slt", instruction);
+            break;
+        case 0x4:
+            switch (instruction.rtype.funct7) {
+                case 0x0:   
+                debug_print_rtype("xor", instruction);
+                break;
+                case 0x1:
+                debug_print_rtype("div", instruction);
+                break;
+                default:
+                debug_handle_invalid_instruction(instruction);
+                break;
+            }
+            break;
+        case 0x5:
+            switch (instruction.rtype.funct7) {
+                case 0x0:
+                debug_print_rtype("srl", instruction);
+                break;
+                case 0x20:
+                debug_print_rtype("sra", instruction);
+                break;
+                default:
+                debug_handle_invalid_instruction(instruction);
+                break;
+            }
+            break;
+        case 0x6:
+            switch (instruction.rtype.funct7) {
+                case 0x0:
+                debug_print_rtype("or", instruction);
+                break;
+                case 0x1:
+                debug_print_rtype("rem", instruction);
+                break;
+                default:
+                debug_handle_invalid_instruction(instruction);
+                break;
+            }
+            break;
+        case 0x7:
+            debug_print_rtype("and", instruction);
+            break;
+        default:
+            debug_handle_invalid_instruction(instruction);
+        break;
+    }
+}
+
+void debug_write_itype_except_load(Instruction instruction) {
+    int shiftOp;
+    switch (instruction.itype.funct3) {
+        case 0x0:
+            debug_print_itype_except_load("addi", instruction, instruction.itype.imm);
+            break;
+        case 0x1:
+            debug_print_itype_except_load("slli", instruction, instruction.itype.imm);
+            break;
+        case 0x2:
+            debug_print_itype_except_load("slti", instruction, instruction.itype.imm);
+            break;
+        case 0x4:
+            debug_print_itype_except_load("xori", instruction, instruction.itype.imm);
+            break;
+        case 0x5:
+            shiftOp = instruction.itype.imm >> 10;
+            switch(shiftOp) {
+                case 0x0:
+                    debug_print_itype_except_load("srli", instruction, instruction.itype.imm & 0x1F);
+                    break;
+                case 0x1:
+                    debug_print_itype_except_load("srai", instruction, instruction.itype.imm & 0x1F);
+                    break;
+                default:
+                    debug_handle_invalid_instruction(instruction);
+                    break;
+            }
+            break;
+        case 0x6:
+            debug_print_itype_except_load("ori", instruction, instruction.itype.imm);
+            break;
+        case 0x7:
+            debug_print_itype_except_load("andi", instruction, instruction.itype.imm);
+            break;
+        default:
+            debug_handle_invalid_instruction(instruction);
+            break;  
+    }
+}
+
+void debug_write_load(Instruction instruction) {
+    switch (instruction.itype.funct3) {
+        case 0x0:
+            debug_print_load("lb", instruction);
+            break;
+        case 0x1:
+            debug_print_load("lh", instruction);
+            break;
+        case 0x2:
+            debug_print_load("lw", instruction);
+            break;
+        default:
+            debug_handle_invalid_instruction(instruction);
+            break;
+    }
+}
+
+void debug_write_store(Instruction instruction) {
+    switch (instruction.stype.funct3) {
+        case 0x0:
+            debug_print_store("sb", instruction);
+            break;
+        case 0x1:
+            debug_print_store("sh", instruction);
+            break;
+        case 0x2:
+            debug_print_store("sw", instruction);
+            break;
+        default:
+            debug_handle_invalid_instruction(instruction);
+            break;
+    }
+}
+
+void debug_write_branch(Instruction instruction) {
+    switch (instruction.sbtype.funct3) {
+        case 0x0:
+            debug_print_branch("beq", instruction);
+            break;
+        case 0x1:
+            debug_print_branch("bne", instruction);
+            break;
+        default:
+            debug_handle_invalid_instruction(instruction);
+            break;
+    }
+}
+
+void debug_print_lui(Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, LUI_FORMAT, instruction.utype.rd, instruction.utype.imm);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, LUI_FORMAT, instruction.utype.rd, instruction.utype.imm);
+}
+
+void debug_print_jal(Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, JAL_FORMAT, instruction.ujtype.rd, get_jump_offset(instruction));
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, JAL_FORMAT, instruction.ujtype.rd, get_jump_offset(instruction));
+}
+
+void debug_print_ecall(Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, ECALL_FORMAT);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, ECALL_FORMAT);
+}
+
+void debug_print_rtype(char *name, Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, RTYPE_FORMAT, name, instruction.rtype.rd, instruction.rtype.rs1, instruction.rtype.rs2);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, RTYPE_FORMAT, name, instruction.rtype.rd, instruction.rtype.rs1, instruction.rtype.rs2);
+}
+
+void debug_print_itype_except_load(char *name, Instruction instruction, int imm) {
+    unsigned imm_raw = (unsigned) imm;
+    int imm_ext = sign_extend_number(imm_raw, 12);
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm_ext);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, ITYPE_FORMAT, name, instruction.itype.rd, instruction.itype.rs1, imm_ext);
+}
+
+void debug_print_load(char *name, Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, MEM_FORMAT, name, instruction.itype.rd, instruction.itype.imm, instruction.itype.rs1);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, MEM_FORMAT, name, instruction.itype.rd, instruction.itype.imm, instruction.itype.rs1);
+}
+
+void debug_print_store(char *name, Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, MEM_FORMAT, name, instruction.stype.rs2, get_store_offset(instruction), instruction.stype.rs1);
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, MEM_FORMAT, name, instruction.stype.rs2, get_store_offset(instruction), instruction.stype.rs1);
+}
+
+void debug_print_branch(char *name, Instruction instruction) {
+    /*fprintf(stderr, "%s", "\nMY OUTPUT: ");
+    fprintf(stderr, BRANCH_FORMAT, name, instruction.sbtype.rs1, instruction.sbtype.rs2, get_branch_offset(instruction));
+    fprintf(stderr, "%s", "\n");*/
+    fprintf(stderr, BRANCH_FORMAT, name, instruction.sbtype.rs1, instruction.sbtype.rs2, get_branch_offset(instruction));
+}
