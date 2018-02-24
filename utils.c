@@ -194,7 +194,7 @@ void handle_invalid_write(Address address) {
 }
 
 void debug_handle_invalid_instruction(Instruction instruction) {
-    printf(stderr, "DEBUGGING PRINT: Invalid Instruction: 0x%08x\n", instruction.bits); 
+    printf(stderr, "%s 0x%08x\n", "DEBUGGING PRINT: Invalid Instruction: ", instruction.bits); 
 }
 
 
