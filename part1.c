@@ -17,6 +17,21 @@ void write_load(Instruction);
 void write_store(Instruction);
 void write_branch(Instruction);
 
+void debug_print_rtype(char *, Instruction);
+void debug_print_itype_except_load(char *, Instruction, int);
+void debug_print_load(char *, Instruction);
+void debug_print_store(char *, Instruction);
+void debug_print_branch(char *, Instruction);
+void debug_print_lui(Instruction);
+void debug_print_jal(Instruction);
+void debug_print_ecall(Instruction);
+void debug_write_rtype(Instruction);
+void debug_write_itype_except_load(Instruction); 
+void debug_write_load(Instruction);
+void debug_write_store(Instruction);
+void debug_write_branch(Instruction);
+void print_debug_instruction(uint32_t instruction_bits);
+
 
 void decode_instruction(uint32_t instruction_bits) {
     Instruction instruction = parse_instruction(instruction_bits);
