@@ -291,7 +291,7 @@ void execute_load(Instruction instruction, Processor *processor, Byte *memory) {
             break;
         case 0x2:
             // LW
-            processor->R[instruction.itype.rd] = sign_extend_number(load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm, 12), LENGTH_WORD), 32);
+            processor->R[instruction.itype.rd] = load(memory, processor->R[instruction.itype.rs1] + sign_extend_number(instruction.itype.imm, 12), LENGTH_WORD);
             processor->PC += 4;
             break;
         default:
