@@ -209,7 +209,7 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
         case 0x7:
             // ANDI
             fprintf(stderr, "%s", "CALLED ANDI");
-            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1] & imm, 12);
+            processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] & imm;
             processor->PC += 4;
             fprintf(stderr, "%s", "ANDI SUCCESSFUL");
             break;
