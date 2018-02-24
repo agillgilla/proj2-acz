@@ -200,6 +200,8 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             unsigned funct = get_bit_range(instruction.itype.imm, 10, 10);
             if (funct) { //SRAI
                 processor->R[instruction.itype.rd] = (unsigned) (sign_extend_number(processor->R[instruction.itype.rs1], 5) >> shamt);
+                fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
+                fprintf(stderr, "%s%d", "SHAMT: ", shamt);
             } else { //SRLI
                 processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] >> shamt;
             }
