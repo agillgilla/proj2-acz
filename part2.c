@@ -304,17 +304,17 @@ void execute_store(Instruction instruction, Processor *processor, Byte *memory) 
     switch (instruction.stype.funct3) {
         case 0x0:
             // SB
-            store(memory, processor->R[instruction.itype.rs1] + get_store_offset(instruction), LENGTH_BYTE, processor->R[instruction.itype.rd]);
+            store(memory, processor->R[instruction.stype.rs1] + get_store_offset(instruction), LENGTH_BYTE, processor->R[instruction.stype.rs2]);
             processor->PC += 4;
             break;
         case 0x1:
             // SH
-            store(memory, processor->R[instruction.itype.rs1] + get_store_offset(instruction), LENGTH_HALF_WORD, processor->R[instruction.itype.rd]);
+            store(memory, processor->R[instruction.stype.rs1] + get_store_offset(instruction), LENGTH_HALF_WORD, processor->R[instruction.stype.rs2]);
             processor->PC += 4;
             break;
         case 0x2:
             // SW
-            store(memory, processor->R[instruction.itype.rs1] + get_store_offset(instruction), LENGTH_WORD, processor->R[instruction.itype.rd]);
+            store(memory, processor->R[instruction.stype.rs1] + get_store_offset(instruction), LENGTH_WORD, processor->R[instruction.stype.rs2]);
             processor->PC += 4;
             break;
         default:
