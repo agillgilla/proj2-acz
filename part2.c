@@ -15,6 +15,8 @@ void execute_lui(Instruction, Processor *);
 
 unsigned get_bit_range(unsigned, unsigned, unsigned);
 
+unsigned set_bit(unsigned input, unsigned pos, unsigned val);
+
 void print_debug_instruction(uint32_t instruction_bits);
 
 void execute_instruction(uint32_t instruction_bits, Processor *processor,Byte *memory) {    
@@ -199,7 +201,19 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             unsigned shamt = instruction.itype.imm & 0x1F;
             unsigned funct = instruction.itype.imm >> 10;
             if (funct) { //SRAI
-                processor->R[instruction.itype.rd] = (unsigned) (sign_extend_number(processor->R[instruction.itype.rs1], 5) >> shamt);
+                if (processor->R[instruction.itype.rs1] >> 31) { //MSB is 1
+                    unsigned shifted = processor->R[instruction.itype.rs1] >> shamt;
+                    if (shamt >= 31) {
+                        processor->R[instruction.itype.rd] = 0xFFFFFFFF;
+                    } else {
+                        unsigned shifted = processor->R[instruction.itype.rs1] >> shamt;
+                        unsigned result = set_bit(0, 32 - shamt, 1);
+                        result = ~(result - 1);
+                        result = result | shifted;
+                    }
+                } else { //MSB is 0
+                    processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] >> shamt;
+                }
                 fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
                 fprintf(stderr, "%s%d%s", "SHAMT: ", shamt, "\n");
             } else { //SRLI
