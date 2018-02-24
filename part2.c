@@ -182,7 +182,7 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             break;
         case 0x2:
             // SLTI
-            processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] < imm;
+            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1], 5) < imm;
             processor->PC += 4;
             break;
         case 0x4:
@@ -203,13 +203,13 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             break;
         case 0x6:
             // ORI
-            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1], 5) | imm;
+            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1] | imm, 12);
             processor->PC += 4;
             break;
         case 0x7:
             // ANDI
             fprintf(stderr, "%s", "CALLED ANDI");
-            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1], 5) & imm;
+            processor->R[instruction.itype.rd] = sign_extend_number(processor->R[instruction.itype.rs1] & imm, 12);
             processor->PC += 4;
             fprintf(stderr, "%s", "ANDI SUCCESSFUL");
             break;
