@@ -168,7 +168,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
 }
 
 void execute_itype_except_load(Instruction instruction, Processor *processor) {
-    int imm = sign_extend_number(processor->R[instruction.itype.imm], 12);
+    int imm = sign_extend_number(instruction.itype.imm, 12);
     switch (instruction.itype.funct3) {
         case 0x0:
             // ADDI
