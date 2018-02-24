@@ -177,8 +177,6 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
         case 0x0:
             // ADDI
             processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] + imm;
-            //fprintf(stderr, "%s%d%s", "IMMEDIATE: ", imm, "\n");
-            //fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rd, ": ", processor->R[instruction.itype.rd], "\n");
             processor->PC += 4;
             break;
         case 0x1:
@@ -202,7 +200,6 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             unsigned funct = instruction.itype.imm >> 10;
             if (funct) { //SRAI
                 if (processor->R[instruction.itype.rs1] >> 31) { //MSB is 1
-                    unsigned shifted = processor->R[instruction.itype.rs1] >> shamt;
                     if (shamt >= 31) {
                         processor->R[instruction.itype.rd] = 0xFFFFFFFF;
                     } else {
@@ -368,7 +365,6 @@ Word load(Byte *memory, Address address, Alignment alignment) {
         //fprintf(stderr, "%s", "LOADING WORD\n");
         //fprintf(stderr, "%d%s", *(uint32_t*) (memory + address), "\n");
         //print_debug_instruction(*(uint32_t*) (memory + address));
-        //decode_instruction(*(uint32_t*) (memory + address));
         return *(uint32_t*) (memory + address);
     } else if (alignment == LENGTH_HALF_WORD) {
         //fprintf(stderr, "%s", "LOADING HALF WORD\n");
