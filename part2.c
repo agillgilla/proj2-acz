@@ -196,8 +196,8 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             break;
         case 0x5: ; //This is an empty statement
             // Shift Right (You must handle both logical and arithmetic)
-            unsigned shamt = get_bit_range(instruction.itype.imm, 0, 4);
-            unsigned funct = get_bit_range(instruction.itype.imm, 10, 10);
+            unsigned shamt = instruction.itype.imm & 0x1F;
+            unsigned funct = instruction.itype.imm >> 10;
             if (funct) { //SRAI
                 processor->R[instruction.itype.rd] = (unsigned) (sign_extend_number(processor->R[instruction.itype.rs1], 5) >> shamt);
                 fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
