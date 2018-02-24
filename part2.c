@@ -176,7 +176,7 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             // ADDI
             processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] + imm;
             fprintf(stderr, "%s%d%s", "IMMEDIATE: ", imm, "\n");
-            fprintf(stderr, "%s%d%s%d%s", "Register x", instuction.itype.rd, ": ", processor->R[instruction.itype.rd], "\n");
+            fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rd, ": ", processor->R[instruction.itype.rd], "\n");
             processor->PC += 4;
             break;
         case 0x1:
