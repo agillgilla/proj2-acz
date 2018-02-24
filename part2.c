@@ -90,14 +90,6 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                     fprintf(stderr, "%s", "CALLED mulH\n");
                     int64_t result = (int32_t) processor->R[instruction.rtype.rs1] * (int32_t) processor->R[instruction.rtype.rs2];
                     processor->R[instruction.rtype.rd] = (int32_t) (result >> 32);
-                    /*IMPLEMENT THIS LATER! */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
-                /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
                     processor->PC += 4;
                     break;
             }
