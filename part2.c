@@ -102,7 +102,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             break;
         case 0x2:
             // SLT
-            processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] < processor->R[instruction.rtype.rs2];
+            processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] < (int32_t) processor->R[instruction.rtype.rs2];
             processor->PC += 4;
             break;
         case 0x4:
