@@ -177,8 +177,8 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
         case 0x0:
             // ADDI
             processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] + imm;
-            fprintf(stderr, "%s%d%s", "IMMEDIATE: ", imm, "\n");
-            fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rd, ": ", processor->R[instruction.itype.rd], "\n");
+            //fprintf(stderr, "%s%d%s", "IMMEDIATE: ", imm, "\n");
+            //fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rd, ": ", processor->R[instruction.itype.rd], "\n");
             processor->PC += 4;
             break;
         case 0x1:
@@ -214,10 +214,9 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
                 } else { //MSB is 0
                     processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] >> shamt;
                 }
-                fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
-                fprintf(stderr, "%s%d%s", "SHAMT: ", shamt, "\n");
+                //fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
+                //fprintf(stderr, "%s%d%s", "SHAMT: ", shamt, "\n");
             } else { //SRLI
-                fprintf(stderr, "%s", "SRLI");
                 processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] >> shamt;
             }
             processor->PC += 4;
@@ -229,10 +228,8 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             break;
         case 0x7:
             // ANDI
-            fprintf(stderr, "%s", "CALLED ANDI");
             processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] & imm;
             processor->PC += 4;
-            fprintf(stderr, "%s", "ANDI SUCCESSFUL");
             break;
         default:
             handle_invalid_instruction(instruction);
@@ -352,7 +349,7 @@ void execute_lui(Instruction instruction, Processor *processor) {
 }
 
 void store(Byte *memory, Address address, Alignment alignment, Word value) {
-    fprintf(stderr, "%s", "CALLED STORE");
+    //fprintf(stderr, "%s", "STORING WORD\n");
     if (alignment == LENGTH_WORD) {
         *(uint32_t*) (memory + address) = (uint32_t) value;
     } else if (alignment == LENGTH_HALF_WORD) {
