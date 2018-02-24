@@ -201,8 +201,9 @@ void execute_itype_except_load(Instruction instruction, Processor *processor) {
             if (funct) { //SRAI
                 processor->R[instruction.itype.rd] = (unsigned) (sign_extend_number(processor->R[instruction.itype.rs1], 5) >> shamt);
                 fprintf(stderr, "%s%d%s%d%s", "Register x", instruction.itype.rs1, ": ", processor->R[instruction.itype.rs1], "\n");
-                fprintf(stderr, "%s%d", "SHAMT: ", shamt);
+                fprintf(stderr, "%s%d%s", "SHAMT: ", shamt, "\n");
             } else { //SRLI
+                fprintf(stderr, "%s", "SRLI");
                 processor->R[instruction.itype.rd] = processor->R[instruction.itype.rs1] >> shamt;
             }
             processor->PC += 4;
