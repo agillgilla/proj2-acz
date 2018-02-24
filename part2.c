@@ -15,6 +15,8 @@ void execute_lui(Instruction, Processor *);
 
 unsigned get_bit_range(unsigned, unsigned, unsigned);
 
+void print_debug_instruction(uint32_t instruction_bits);
+
 void execute_instruction(uint32_t instruction_bits, Processor *processor,Byte *memory) {    
     Instruction instruction = parse_instruction(instruction_bits);
     switch(instruction.opcode) {

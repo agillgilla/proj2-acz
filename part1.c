@@ -31,6 +31,7 @@ void debug_write_load(Instruction);
 void debug_write_store(Instruction);
 void debug_write_branch(Instruction);
 void print_debug_instruction(uint32_t instruction_bits);
+void debug_handle_invalid_instruction(Instruction instruction);
 
 
 void decode_instruction(uint32_t instruction_bits) {
@@ -325,7 +326,7 @@ void print_debug_instruction(uint32_t instruction_bits) {
             debug_print_lui(instruction);
             break;
         case 0x6F:
-            debug_debug_print_jal(instruction);
+            debug_print_jal(instruction);
             break;
         case 0x73:
             debug_print_ecall(instruction);

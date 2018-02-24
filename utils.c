@@ -6,6 +6,8 @@ unsigned get_bit_range(unsigned, unsigned, unsigned);
 unsigned set_bit_range(int, int, int, int, int);
 void print_unsigned_binary(unsigned);
 
+void debug_handle_invalid_instruction(Instruction instruction);
+
 /* Sign extends the given field to a 32-bit integer where field is
  * interpreted an n-bit integer. */ 
 int sign_extend_number(unsigned int field, unsigned int n) {
