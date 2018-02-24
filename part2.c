@@ -59,17 +59,17 @@ void execute_rtype(Instruction instruction, Processor *processor) {
             switch (instruction.rtype.funct7) {
                 case 0x0:
                     // Add
-                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] + processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] + (int32_t) processor->R[instruction.rtype.rs2];
                     processor->PC += 4;
                     break;
                 case 0x1:
                     // Mul 
-                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] * processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] * (int32_t) processor->R[instruction.rtype.rs2];
                     processor->PC += 4;
                     break;
                 case 0x20:
                     // Sub
-                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] - processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] - (int32_t) processor->R[instruction.rtype.rs2];
                     processor->PC += 4;
                     break;
                 default:
@@ -88,6 +88,8 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                 case 0x1:
                     // MULH
                     fprintf(stderr, "%s", "CALLED mulH\n");
+                    int64_t result = (int32_t) processor->R[instruction.rtype.rs1] * (int32_t) processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = (int32_t) (result >> 32);
                     /*IMPLEMENT THIS LATER! */
                 /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
                 /* TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT TODO: IMPLEMENT */
@@ -114,7 +116,7 @@ void execute_rtype(Instruction instruction, Processor *processor) {
                     break;
                 case 0x1:
                     // DIV
-                    processor->R[instruction.rtype.rd] = processor->R[instruction.rtype.rs1] / processor->R[instruction.rtype.rs2];
+                    processor->R[instruction.rtype.rd] = (int32_t) processor->R[instruction.rtype.rs1] / (int32_t) processor->R[instruction.rtype.rs2];
                     processor->PC += 4;
                     break;
                 default:
